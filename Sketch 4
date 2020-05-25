@@ -1,0 +1,36 @@
+#include <Wire.h>
+#include <Zumo32U4.h>
+
+Zumo32U4Motors motors;
+Zumo32U4Encoders encoders;
+Zumo32U4ButtonA buttonA;
+Zumo32U4LCD lcd;
+
+int Velocidad = 200;
+
+void setup() 
+{
+  Serial.begin(9600);
+  buttonA.waitForButton();
+}
+
+void loop() 
+{
+  if (encoders.getCountsLeft() < 2700)
+  {
+    motors.setLeftSpeed(Velocidad);
+    motors.setRightSpeed(-Velocidad);
+  }
+
+  else 
+  {
+    motors.setSpeeds(0,0);
+  }
+  
+  lcd.clear();
+  lcd.gotoXY(0,0);
+  lcd.print("Giro:");
+  lcd.gotoXY(1,1);
+  lcd.print(encoders.getCountsLeft());
+  delay(50); 
+}
