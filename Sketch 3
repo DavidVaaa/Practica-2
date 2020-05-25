@@ -1,0 +1,29 @@
+#include <Wire.h>
+#include <Zumo32U4.h>
+#include <Zumo32U4Encoders.h>
+
+Zumo32U4Motors motors;
+Zumo32U4Encoders encoders;
+Zumo32U4ButtonA buttonA;
+
+int Velocidad_1 = 400;
+int Velocidad_2 = 50;
+
+
+void setup() 
+{
+  buttonA.waitForButton();
+}
+
+void loop() 
+{
+  if (encoders.getCountsRight() < 910)
+    {  
+      motors.setSpeeds(Velocidad_1, Velocidad_2);
+    }
+  
+  else if (encoders.getCountsRight() >= 910)
+    {
+      motors.setSpeeds(0, 0);
+    }
+}
