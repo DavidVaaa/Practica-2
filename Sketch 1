@@ -1,3 +1,12 @@
+/*
+Que deberia hacer el sketch?
+  - Cuando el led amarillo este encendido solo, aumentar la velocidad del motor respectivo (girando circularmente)
+  - Cuando el led amarillo y el rojo esten encendidos, disminuir la velocidad del motor respectivo (girando circularmente)
+  - Cuando el led rojo este encendido solo, aumentar la velocidad del motor respectivo (girando en reversa)
+  - Cuando ningun led este encendido, disminuir la velocidad del motor respectivo (girando en reversa)
+*/
+
+
 int velocidad = 0;
 
 void setup() 
@@ -10,13 +19,8 @@ void setup()
     pinMode(16, OUTPUT); // Controla la direccion del motor izquierdo
 
 
-    pinMode(9,  OUTPUT); // Controla la velocidad del motor derecho con PWM
+    pinMode(9,  OUTPUT); // Controla la velocidad del motor derech0 con PWM
     pinMode(10, OUTPUT); // Controla la velocidad del motor izquierdo con PWM
-
-    while (digitalRead(14) == HIGH)
-     {
-       delay(1000);
-     }
 }
 
 void loop() 
@@ -42,7 +46,7 @@ void loop()
         delay(2); 
       }
 
-    delay(1000);        //Espero con el motor apagado un segundo
+    delay(500);        //Espero con el motor apagado medio segundo
 
     digitalWrite(13, LOW);  //Apago la luz amarilla
 
@@ -65,7 +69,7 @@ void loop()
         delay(2); 
       } 
 
-    delay(1000);                    //Espero con el motor apagado un segundo
+    delay(500);                    //Espero con el motor apagado medio segundo
 
     digitalWrite(13, HIGH);   //Prendo la luz amarilla
 
@@ -88,7 +92,7 @@ void loop()
         delay(2); 
       }
 
-    delay(1000);                    //Espero con el motor apagado un segundo
+     delay(500);        //Espero con el motor apagado medio segundo
 
     digitalWrite(13, LOW);  //Apago la luz amarilla
 
@@ -111,5 +115,5 @@ void loop()
         delay(2); 
       } 
 
-    delay(1000);                    //Espero con el motor apagado un segundo
+     delay(500);                    //Espero con el motor apagado medio segundo
 }
