@@ -1,0 +1,115 @@
+int velocidad = 0;
+
+void setup() 
+{
+    pinMode(13, OUTPUT); // Activo Led Amarillo
+    pinMode(17, OUTPUT); //Activo Led Rojo
+
+    pinMode(15, OUTPUT); // Controla la direccion del motor derecho
+                         // LOW = adelante,  HIGH = reversa
+    pinMode(16, OUTPUT); // Controla la direccion del motor izquierdo
+
+
+    pinMode(9,  OUTPUT); // Controla la velocidad del motor derecho con PWM
+    pinMode(10, OUTPUT); // Controla la velocidad del motor izquierdo con PWM
+
+    while (digitalRead(14) == HIGH)
+     {
+       delay(1000);
+     }
+}
+
+void loop() 
+{
+    digitalWrite(13, HIGH);   //Prendo la luz amarilla
+
+    digitalWrite(16, HIGH);   //Motor izquierdo, adelante
+    digitalWrite(15, HIGH);   //Motor derecho, adelante (No afectara la direccion elegida)
+
+    for (int velocidad = 0; velocidad <= 255; velocidad ++)  //Acelero
+      {
+        analogWrite(10, velocidad);    //Acelero el motor izquierdo
+        analogWrite(9, 0);             //Mantengo el motor derecho en cero
+        delay(2);
+      }
+
+    digitalWrite(17, HIGH);   //Prendo la luz roja
+    
+    for (int velocidad = 255; velocidad <= 0; velocidad --)  //Desacelero
+      {
+        analogWrite(10, velocidad);    //Desacelero el motor izquierdo
+        analogWrite(9, 0);             //Mantengo el motor derecho en cero
+        delay(2); 
+      }
+
+    delay(1000);        //Espero con el motor apagado un segundo
+
+    digitalWrite(13, LOW);  //Apago la luz amarilla
+
+    digitalWrite(16, LOW);   //Motor izquierdo, atras
+    digitalWrite(15, LOW);   //Motor derecho, atras (La direccion no afecta)
+
+    for (int velocidad = 0; velocidad <= 255; velocidad ++)   // Acelero
+      {
+        analogWrite(10, velocidad);   //Acelero el motor izquierdo, en reversa
+        analogWrite(9, 0);            //Mantengo el motor derecho apagado
+        delay(2);
+      }
+
+    digitalWrite(17, LOW);   //Apago la luz roja
+
+    for (int velocidad = 255; velocidad <= 0; velocidad --)   // Desacelero
+      {
+        analogWrite(10, velocidad);       //Desacelero el motor izquierdo, en reversa
+        analogWrite(9, 0);                //Mantengo el motor derecho apagado
+        delay(2); 
+      } 
+
+    delay(1000);                    //Espero con el motor apagado un segundo
+
+    digitalWrite(13, HIGH);   //Prendo la luz amarilla
+
+    digitalWrite(15, HIGH);   //Motor derecho, adelante
+    digitalWrite(16, HIGH);   //Motor izquierdo, adelante (No afectara la direccion elegida)
+
+    for (int velocidad = 0; velocidad <= 255; velocidad ++)  //Acelero
+      {
+        analogWrite(9, velocidad);    //Acelero el motor derecho
+        analogWrite(10, 0);           //Mantengo el motor izquierdo en cero
+        delay(2);
+      }
+
+    digitalWrite(17, HIGH);   //Prendo el led rojo
+
+    for (int velocidad = 255; velocidad <= 0; velocidad --)  //Desacelero
+      {
+        analogWrite(9, velocidad);    //Desacelero el motor derecho
+        analogWrite(10, 0);           //Mantengo el motor izquierdo en cero
+        delay(2); 
+      }
+
+    delay(1000);                    //Espero con el motor apagado un segundo
+
+    digitalWrite(13, LOW);  //Apago la luz amarilla
+
+    digitalWrite(15, LOW);   //Motor derecho, atras
+    digitalWrite(16, LOW);   //Motor izquierdo, atras (no afectara)
+  
+    for (int velocidad = 0; velocidad <= 255; velocidad ++)   // Acelero
+      {
+        analogWrite(9, velocidad);   //Acelero el motor derecho, en reversa
+        analogWrite(10, 0);          //Mantengo el motor izquierdo apagado
+        delay(2);
+      }
+
+    digitalWrite(17, LOW);   //Apago el led rojo
+
+    for (int velocidad = 255; velocidad <= 0; velocidad --)   // Desacelero
+      {
+        analogWrite(9, velocidad);       //Desacelero el motor derecho, en reversa
+        analogWrite(10, 0);              //Mantengo el motor izquierdo apagado
+        delay(2); 
+      } 
+
+    delay(1000);                    //Espero con el motor apagado un segundo
+}
