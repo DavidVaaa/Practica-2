@@ -1,0 +1,60 @@
+#include <Wire.h>
+#include <Zumo32U4.h>
+
+Zumo32U4LineSensors lineSensors;
+
+#define NUM_SENSORS 3  
+unsigned int lineSensorValues[NUM_SENSORS];  //Defino un int que valdra lo que el sensor registre
+
+void setup() 
+{
+  lineSensors.initThreeSensors();   //Inicializo los 3 sensores
+
+  pinMode(15, OUTPUT); // Controla la direccion del motor derecho
+                       // LOW = adelante,  HIGH = reversa
+  pinMode(16, OUTPUT); // Controla la direccion del motor izquierdo
+
+
+  pinMode(9,  OUTPUT); // Controla la velocidad del motor derecho con PWM
+  pinMode(10, OUTPUT); // Controla la velocidad del motor izquierdo con PWM
+
+  digitalWrite(15, LOW);  //Motor derecho adelante
+  digitalWrite(16, LOW);  //Motor izquierdo adelante
+}
+
+void loop() 
+{
+  lineSensors.read(lineSensorValues);  
+  
+/*Utilizo el valor 1600 como un aproximado de la lectura que
+realizan los sensores al registrar el color negro*/
+
+  if (lineSensorValues[0] >= 1600) 
+    {
+        ledYellow (1);
+        analogWrite(10, 0);
+        analogWrite (9, 0); 
+    }
+    
+  if (lineSensorValues[1] >= 1600)
+    {
+        ledYellow (1);
+        analogWrite(10, 0);
+        analogWrite (9, 0); 
+    }
+    
+  if (lineSensorValues[2] >= 1600)
+    {
+        ledYellow (1);
+        ledRed (0);
+        analogWrite(10, 0);
+        analogWrite (9, 0); 
+    }
+ else
+    {
+        ledYellow (0);
+        ledRed (1);
+        analogWrite(10, 100);
+        analogWrite (9, 100);
+    }
+}
