@@ -1,0 +1,71 @@
+//Sketch 1
+
+#include <Wire.h>
+#include <Zumo32U4.h>
+
+Zumo32U4Motors motors;
+Zumo32U4Encoders encoders;
+Zumo32U4ButtonA buttonA;
+Zumo32U4LCD lcd;
+
+int Velocidad = 200;
+
+void setup() 
+{
+  Serial.begin(9600);
+}
+
+void loop() 
+{
+int32_t grados = map(Serial.read(), 0, 360, 0, 2700);
+
+if (encoders.getCountsLeft() < grados)
+  {
+    motors.setLeftSpeed(Velocidad);
+    motors.setRightSpeed(-Velocidad);
+  }
+  else 
+  {
+    motors.setSpeeds(0,0);
+  }
+}
+
+
+//Sketch 2
+
+#include <Wire.h>
+#include <Zumo32U4.h>
+
+Zumo32U4Motors motors;
+Zumo32U4Encoders encoders;
+Zumo32U4ButtonA buttonA;
+Zumo32U4LCD lcd;
+
+int velocidad = 200;
+int32_t grados;
+
+void setup() 
+{
+  Serial.begin(9600);
+ }
+
+void loop() 
+{
+    if (Serial.available()>0)
+    {
+      grados = Serial.read();
+    }
+
+  int tics = map(grados, 0, 360, 0, 910);
+ 
+  if (encoders.getCountsLeft() < tics)
+    {  
+      motors.setLeftSpeed(velocidad);
+      motors.setRightSpeed(-velocidad);
+    }
+  
+  else if (encoders.getCountsLeft() >= tics)
+    {
+      motors.setSpeeds(0, 0);
+    }
+}
