@@ -1,0 +1,33 @@
+#include <Wire.h>
+#include <Zumo32U4.h>
+
+Zumo32U4ProximitySensors proxSensors;
+
+long lastSampleTime = 0;
+
+void setup()
+{
+  Serial.begin(9600);
+  proxSensors.initThreeSensors();
+}
+
+void loop()
+{
+  if ((millis() - lastSampleTime) >= 100)
+  {
+    lastSampleTime = millis();
+    proxSensors.read();
+    Serial.print(proxSensors.countsLeftWithLeftLeds());
+    Serial.print(" ");
+    Serial.print(proxSensors.countsLeftWithRightLeds());
+    Serial.print(" ");
+    Serial.print(proxSensors.countsFrontWithLeftLeds());
+    Serial.print(" ");
+    Serial.print(proxSensors.countsFrontWithRightLeds());
+    Serial.print(" ");
+    Serial.print(proxSensors.countsRightWithLeftLeds());
+    Serial.print(" ");    
+    Serial.print(proxSensors.countsRightWithRightLeds());
+    Serial.println(" ");    
+  }
+}
