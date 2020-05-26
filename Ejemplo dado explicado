@@ -1,0 +1,33 @@
+#include <Wire.h>
+#include <Zumo32U4.h> //Incluye las librerias Wire y Zumo32U4
+
+Zumo32U4ProximitySensors proxSensors; //Define los sensores de proximidad, que se llamarán proxSensors
+
+long lastSampleTime = 0; //Define la variable que guarda el último tiempo de muestra tomada de valores
+
+void setup()
+{
+  Serial.begin(9600); 
+  proxSensors.initThreeSensors(); //Inicia los tres sensores de proximidad en el array de sensores frontales
+}
+
+void loop()
+{
+  if ((millis() - lastSampleTime) >= 100) //Programa y establece los intervalos entre los cuales se toman las medidas de los sensores
+  {
+    lastSampleTime = millis(); //Iguala los valores de las variables y millis aumenta nuevamente
+    proxSensors.read(); //Lee los valores de los sensores
+    Serial.print(proxSensors.countsLeftWithLeftLeds()); //Devuelve la cantidad de brillo del led izquierdo que capta el sensor izquierdo
+    Serial.print(" ");
+    Serial.print(proxSensors.countsLeftWithRightLeds()); //Devuelve la cantidad de brillo del led derecho que capta el sensor izquierdo
+    Serial.print(" ");
+    Serial.print(proxSensors.countsFrontWithLeftLeds()); //Devuelve la cantidad de brillo del led izquierdo que capta el sensor frontal
+    Serial.print(" ");
+    Serial.print(proxSensors.countsFrontWithRightLeds()); //Devuelve la cantidad de brillo del led derecho que capta el sensor frontal
+    Serial.print(" ");
+    Serial.print(proxSensors.countsRightWithLeftLeds()); //Devuelve la cantidad de brillo del led izquierdo que capta el sensor derecho
+    Serial.print(" ");    
+    Serial.print(proxSensors.countsRightWithRightLeds()); //Devuelve la cantidad de brillo del led derecho que capta el sensor derecho
+    Serial.println(" ");    
+  }
+}
